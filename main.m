@@ -44,9 +44,9 @@ clear domingo;
 
 %% Start processing
 
-params.outputflag = 0;
-resultSegunda = gurobi(modeloSegunda, params);
-resultDomingo = gurobi(modeloDomingo, params);
+%params.outputflag = 0;
+%resultSegunda = gurobi(modeloSegunda, params);
+%resultDomingo = gurobi(modeloDomingo, params);
 
 
 
