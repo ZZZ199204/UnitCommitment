@@ -18,6 +18,11 @@ domingo = (table.Datetime >= '2017-08-13 00:00:00' & table.Datetime < '2017-08-1
 domingo = table(domingo,:);
 
 clear table;
+
+segunda = sortrows(segunda, 'Datetime');
+domingo = sortrows(domingo, 'Datetime');
+
+
 fprintf('Data Cleaning done :)\n');
 
 
