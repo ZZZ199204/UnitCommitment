@@ -1,6 +1,20 @@
 function model = modelMaker(dataset)
     [network, capacity, costs] = scenarios();
-
+    
+    names = {}
+    for i = 1:72
+        resto = mod(i,3)
+        if resto == 0
+            names = [names, strcat('N',num2str(i))]
+        elseif resto == 1
+            names = [names, strcat('C',num2str(i))]
+        else
+            names = [names, strcat('CC',num2str(i))] 
+        end
+    end
+    model.varnames = names;
+    clear resto;
+    clear names;
     %%Construção da função objetivo
     objetivo = zeros(1,72)
     for i  = 1:3
@@ -46,7 +60,7 @@ function model = modelMaker(dataset)
     limites = [demanda; limiteRede]
     tipoRestricao = strcat(restricaoDemanda, restricaoRede)
     model.A = sparse(restricoes)
-    model.b = limites.';
+    model.rhs = limites;
     model.sense = tipoRestricao;
     
     
