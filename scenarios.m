@@ -17,8 +17,8 @@ function [network, capacity, costs] = scenarios()
     
     %Quantidade de Geradores Disponiveis de cada tipo
     network = [
-        6  % Nuclear
-        20 % Carvão
-        20 % Geotermicos
+        5  % Nuclear
+        15 % Carvão
+        15 % Geotermicos
         ];
 end 
