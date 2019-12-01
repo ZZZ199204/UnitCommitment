@@ -1,20 +1,7 @@
 function model = modelMaker(dataset)
     [network, capacity, costs] = scenarios();
     
-    names = {}
-    for i = 1:72
-        resto = mod(i,3)
-        if resto == 0
-            names = [names, strcat('N',num2str(i))]
-        elseif resto == 1
-            names = [names, strcat('C',num2str(i))]
-        else
-            names = [names, strcat('CC',num2str(i))] 
-        end
-    end
-    model.varnames = names;
-    clear resto;
-    clear names;
+    
     %%Construção da função objetivo
     objetivo = zeros(1,72)
     for i  = 1:3
@@ -40,7 +27,18 @@ function model = modelMaker(dataset)
         restricaoDemanda = strcat(restricaoDemanda, '>');
     end
     
+    %% 5%
+    geracao2 = zeros(24,72);
+    demanda2 = dataset.MW*1.05;
+    restricaoDemanda2 ='';
     
+    for i = 1:24
+        for j = 1:3
+            index = (i-1)*3;
+            geracao2(i,index+j) = capacity(j);
+        end
+        restricaoDemanda2 = strcat(restricaoDemanda2, '<');
+    end
     
     %% Restrição para limitar a quantidade de geradores de acordo com o tipo
     rede = eye(72);
@@ -56,9 +54,9 @@ function model = modelMaker(dataset)
     end
     
     %% Construção das restrições
-    restricoes = [geracao; rede]
-    limites = [demanda; limiteRede]
-    tipoRestricao = strcat(restricaoDemanda, restricaoRede)
+    restricoes = [geracao; geracao2; rede]
+    limites = [demanda; demanda2; limiteRede]
+    tipoRestricao = strcat(restricaoDemanda,restricaoDemanda2, restricaoRede)
     model.A = sparse(restricoes)
     model.rhs = limites;
     model.sense = tipoRestricao;
